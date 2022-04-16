@@ -26,14 +26,23 @@ private:
   void cleanup();
 
   /**
-   * Verifies the socket was created successfully. If not, then prints
-   * the error and ends the program
+   * Verifies that a call was successful. If result is < 0, then prints
+   * the error via perror and exits the program
    */
-  void VerifySocket(int sock);
+  void CheckResult(int result);
+  
+  /**
+   * Waits for a socket connection after binding the address to the socket.
+   */
+  void WaitForFile();
 
   /**
-   * Verifies that a port is successfully bound to a socket. If not, then
-   * this will report the error and end the program
+   * Handles receiving a file from the client connection on socket SOCK
    */
-  void VerifyBind(int result);
+  void ReceiveFile(int sock);
+
+  /**
+   * Reads SIZE bytes from SOCK and stores them in FILE
+   */
+  void CreateFileFromSocket(int sock, const char* file, long int size);
 };
