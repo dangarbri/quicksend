@@ -1,8 +1,13 @@
 *~
-#*
+**/#*
+**/*.o
+.deps
+aclocal*
 autom4te.cache
 autoscan.log
 configure.scan
 config.h
 config.log
 config.status
+Makefile
+stamp*

@@ -30,4 +30,4 @@ private:
    * the error and ends the program
    */
   void VerifySocket(int sock);
-}
+};
