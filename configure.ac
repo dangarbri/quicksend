@@ -17,7 +17,7 @@ AC_PROG_CXX
 # Checks for libraries.
 
 # Checks for header files.
-AC_CHECK_HEADERS([sys/socket.h argp.h])
+AC_CHECK_HEADERS([sys/socket.h argp.h netinet/in.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 

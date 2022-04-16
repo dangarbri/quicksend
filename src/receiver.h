@@ -13,7 +13,7 @@ public:
   /**
    * Begin listening on the specified port
    */
-  void Listen(int port);
+  void Listen();
 private:
   /**
    * The socket descriptor
@@ -30,4 +30,10 @@ private:
    * the error and ends the program
    */
   void VerifySocket(int sock);
+
+  /**
+   * Verifies that a port is successfully bound to a socket. If not, then
+   * this will report the error and end the program
+   */
+  void VerifyBind(int result);
 };

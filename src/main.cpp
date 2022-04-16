@@ -39,6 +39,9 @@ const struct argp argument_parser = {
   PACKAGE_NAME " ipaddress port file_to_send"
 };
 
+// Main function for receiving a file
+void receive_file();
+
 /**
  * Anonymous struct used for storing results from argument parsing.
  */
@@ -94,9 +97,25 @@ int main(int argc, char** argv)
 #endif
 
   // Proceed with sending/receiving files
-  // TODO
+  if (program_flags.is_receiver)
+  {
+    receive_file();
+  }
+  else
+  {
+    // TODO: Implement sender
+  }
   
 #if DEBUG
   std::cout << "Goodbye." << std::endl;
 #endif
+}
+
+/**
+ * Receives a file using a receiver.
+ */
+void receive_file()
+{
+  Receiver receiver;
+  receiver.Listen();
 }
