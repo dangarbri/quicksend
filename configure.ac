@@ -9,9 +9,12 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([
   Makefile
   src/Makefile
+  lib/Makefile
 ])
 
 # Checks for programs.
+AC_PROG_CC
+gl_EARLY
 AC_PROG_CXX
 
 # Checks for libraries.
@@ -25,6 +28,8 @@ AC_TYPE_OFF_T
 AC_TYPE_SSIZE_T
 AC_TYPE_UINT8_T
 AC_TYPE_UINT16_T
+# For gnulib
+gl_INIT
 
 # Checks for library functions.
 AC_CHECK_FUNCS([socket strerror strtol inet_ntoa])
