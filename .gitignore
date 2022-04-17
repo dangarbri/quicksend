@@ -2,7 +2,6 @@
 **/#*
 **/*.o
 .deps
-aclocal*
 autom4te.cache
 autoscan.log
 configure.scan
