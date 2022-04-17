@@ -8,10 +8,8 @@
 #include <arpa/inet.h>
 #include <cstdint>
 #include <cstring>
-#include "receiver.h"
-#if DEBUG
 #include <iostream>
-#endif
+#include "receiver.h"
 
 #define CHUNK_SIZE 1500
 
@@ -65,10 +63,8 @@ void Receiver::Listen()
   result = listen(_sock, 1);
   CheckResult(result);
 
-  std::cout << PACKAGE_NAME << " is listening on address TODO and port 12345" << std::endl;
-  std::cout << "Send a file to it with " << std::endl;
-  std::cout << PACKAGE_NAME << " TODO 12345 filename" << std::endl;
-
+  std::cout << "Waiting for file on port 12345" << std::endl;
+  
   // Now the socket is ready, wait for a connection from a client
   WaitForFile();
 }
@@ -105,9 +101,8 @@ void Receiver::ReceiveFile(int conn)
   // Store the name of the file being read
   char* in_file = new char[bytes_read];
   strncpy(in_file, buffer, bytes_read);
-  // the buffer contains the new line character that we need to remove.
-  // Null terminate the input file at the newline char.
-  in_file[bytes_read - 1] = '\0';
+  // Terminate the filename at the end
+  in_file[bytes_read] = '\0';
   
 
   // The next line should be the size of the file
@@ -124,7 +119,8 @@ void Receiver::ReceiveFile(int conn)
   CheckResult(errno);
 
   // Now we're ready to receive the file
-  std::cout << "Receiving file " << in_file << " with size " << size << std::endl;
+  std::cout << "Receiving file: " << in_file << std::endl;
+  // TODO: Add progress report
 
   CreateFileFromSocket(conn, in_file, size);
 
@@ -162,6 +158,9 @@ void Receiver::CreateFileFromSocket(int sock, const char* in_file, long int size
       // Exit if we didn't read the expected number of bytes... 
       if (bytes_read != chunk_size)
       {
+#if DEBUG
+	std::cout << "Read " << bytes_read << " bytes, expected " << chunk_size << std::endl;
+#endif
 	std::cerr << "Failed reading bytes over the network, is something wrong with the client?" << std::endl;
 	exit(EXIT_FAILURE);
       }

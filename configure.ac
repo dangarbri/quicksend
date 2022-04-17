@@ -17,11 +17,16 @@ AC_PROG_CXX
 # Checks for libraries.
 
 # Checks for header files.
-AC_CHECK_HEADERS([sys/socket.h argp.h netinet/in.h arpa/inet.h])
+AC_CHECK_HEADERS([sys/socket.h argp.h netinet/in.h arpa/inet.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
+AC_CHECK_HEADER_STDBOOL
+AC_TYPE_OFF_T
+AC_TYPE_SSIZE_T
+AC_TYPE_UINT8_T
+AC_TYPE_UINT16_T
 
 # Checks for library functions.
-AC_CHECK_FUNCS([socket])
+AC_CHECK_FUNCS([socket strerror strtol inet_ntoa])
 
 AC_OUTPUT

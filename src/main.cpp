@@ -2,10 +2,9 @@
 #include <argp.h>   // for argparsing
 #include <cstdlib>  // for exit
 #include <cstring>  // for strerror
-#include "receiver.h"
-#if DEBUG
 #include <iostream>
-#endif
+#include "receiver.h"
+#include "sender.h"
 
 // These macros are defined in config.h via autoconf with configure.ac
 const char* argp_program_version = PACKAGE_VERSION;
@@ -41,6 +40,7 @@ const struct argp argument_parser = {
 
 // Main function for receiving a file
 void receive_file();
+void send_file(const char* ip_addr, const char* port, const char* in_file);
 
 /**
  * Anonymous struct used for storing results from argument parsing.
@@ -48,6 +48,9 @@ void receive_file();
 struct {
   // Determines if the program is running as a sender or receiver
   bool is_receiver = false;
+  const char* ip_addr = "";
+  const char* port = "";
+  const char* filename = "";
 } program_flags;
 
 /**
@@ -60,6 +63,27 @@ error_t argparse(int key, char* arg, struct argp_state *state)
   {
   case 'r':
     program_flags.is_receiver = true;
+    break;
+
+  case ARGP_KEY_ARG:
+    switch (state->arg_num) {
+    case 0:
+      program_flags.ip_addr = arg;
+      break;
+    case 1:
+      program_flags.port = arg;
+      break;
+    case 2:
+      program_flags.filename = arg;
+      break;
+    }
+    break;
+
+  case ARGP_KEY_END:
+    if (!program_flags.is_receiver && state->arg_num < 3)
+    {
+      argp_usage(state);
+    }
     break;
     
   default:
@@ -103,7 +127,7 @@ int main(int argc, char** argv)
   }
   else
   {
-    // TODO: Implement sender
+    send_file(program_flags.ip_addr, program_flags.port, program_flags.filename);
   }
   
 #if DEBUG
@@ -118,4 +142,21 @@ void receive_file()
 {
   Receiver receiver;
   receiver.Listen();
+}
+
+void send_file(const char* ip_addr, const char* port, const char* file)
+{
+  Sender sender;
+  long int int_port = strtol(port, NULL, 0);
+  if (int_port > UINT16_MAX)
+  {
+    std::cerr << "Invalid port." << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+#if DEBUG
+  std::cout << "Sending file to " << ip_addr << ":" << port << std::endl;
+#endif
+  
+  sender.Send(ip_addr, (int) int_port, file);
 }

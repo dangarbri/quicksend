@@ -99,7 +99,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_quicksend_OBJECTS = main.$(OBJEXT) receiver.$(OBJEXT)
+am_quicksend_OBJECTS = main.$(OBJEXT) receiver.$(OBJEXT) \
+	sender.$(OBJEXT)
 quicksend_OBJECTS = $(am_quicksend_OBJECTS)
 quicksend_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_$(V))
@@ -117,7 +118,8 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/main.Po ./$(DEPDIR)/receiver.Po
+am__depfiles_remade = ./$(DEPDIR)/main.Po ./$(DEPDIR)/receiver.Po \
+	./$(DEPDIR)/sender.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -174,7 +176,7 @@ CPP = gcc -E
 CPPFLAGS = 
 CXX = g++
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -DDEBUG
+CXXFLAGS = -g -O2
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
@@ -252,7 +254,7 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
-quicksend_SOURCES = main.cpp receiver.cpp
+quicksend_SOURCES = main.cpp receiver.cpp sender.cpp
 all: all-am
 
 .SUFFIXES:
@@ -341,6 +343,7 @@ distclean-compile:
 
 include ./$(DEPDIR)/main.Po # am--include-marker
 include ./$(DEPDIR)/receiver.Po # am--include-marker
+include ./$(DEPDIR)/sender.Po # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -491,6 +494,7 @@ clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 distclean: distclean-am
 		-rm -f ./$(DEPDIR)/main.Po
 	-rm -f ./$(DEPDIR)/receiver.Po
+	-rm -f ./$(DEPDIR)/sender.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -538,6 +542,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/main.Po
 	-rm -f ./$(DEPDIR)/receiver.Po
+	-rm -f ./$(DEPDIR)/sender.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
