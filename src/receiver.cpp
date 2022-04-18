@@ -124,7 +124,7 @@ void Receiver::ReceiveFile(int conn)
 
   CreateFileFromSocket(conn, in_file, size);
 
-  delete in_file;
+  delete[] in_file;
 }
 
 void Receiver::CreateFileFromSocket(int sock, const char* in_file, long int size)
@@ -147,16 +147,10 @@ void Receiver::CreateFileFromSocket(int sock, const char* in_file, long int size
 
       // read a chunk
       ssize_t bytes_read = read(sock, buffer, chunk_size);
-      if (bytes_read < 0)
-      {
-	// If there was a problem reading, attempt to gracefully close
-	// before exiting.
-	fclose(new_file);
-      }
       CheckResult(bytes_read);
 
-      // Exit if we didn't read the expected number of bytes... 
-      if (bytes_read != chunk_size)
+      // Exit if the read on the socket fails
+      if (bytes_read < 0)
       {
 #if DEBUG
 	std::cout << "Read " << bytes_read << " bytes, expected " << chunk_size << std::endl;
