@@ -135,7 +135,7 @@ am_quicksend_OBJECTS = main.$(OBJEXT) receiver.$(OBJEXT) \
 	sender.$(OBJEXT)
 quicksend_OBJECTS = $(am_quicksend_OBJECTS)
 quicksend_LDADD = $(LDADD)
-quicksend_DEPENDENCIES = lib/gnulib.a
+quicksend_DEPENDENCIES = ../lib/libgnu.a
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -1020,7 +1020,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 quicksend_SOURCES = main.cpp receiver.cpp sender.cpp
 AM_CPPFLAGS = -I$(top_srcdir)/lib $(top_builddir)/lib
-LDADD = lib/gnulib.a
+LDADD = ../lib/libgnu.a
 all: all-am
 
 .SUFFIXES:
