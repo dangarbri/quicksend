@@ -11,13 +11,13 @@ another. Your options are:
 - Send an email
 - Upload/Download from a cloud
 - Set up a samba server
-- Set up an rsync daemon (probably the easiest)
+- Set up an rsync daemon
 - Set up an sshd server for scp
 - Set up an FTP server
 - Do it manually with a USB stick
 
-It's so much work! All I want to do is basically "cp" from one system
-to another with no hassle.
+It's too many hoops! All I want to do is basically "cp" from one
+system to another with no hassle.
 
 ## The Solution
 
@@ -26,12 +26,13 @@ should. All it does is transfer files, no configuration necessary.
 
 To receive a file, run:
 ```bash
-quicksend --receive
+quicksend -r
 ```
-It will print the IP Address and port to send the file to, then run
+Then on the sending machine
 ```bash
-quicksend ipaddr port file
+quicksend 192.168.1.xxx 12345 file_to_send
 ```
 That is all. File transferred, hassle free (except for installing
-quicksend)
+quicksend), extremely tiny, simple, program that will take up nearly
+no space. Currently compiles to 105kb on my system
 
