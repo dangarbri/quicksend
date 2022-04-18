@@ -9,10 +9,13 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([
   Makefile
   src/Makefile
+  lib/Makefile
 ])
 
 # Checks for programs.
+AC_PROG_CC
 AC_PROG_CXX
+gl_EARLY
 
 # Checks for libraries.
 
@@ -20,6 +23,7 @@ AC_PROG_CXX
 AC_CHECK_HEADERS([sys/socket.h argp.h netinet/in.h arpa/inet.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
+gl_INIT
 AC_CHECK_HEADER_STDBOOL
 AC_TYPE_OFF_T
 AC_TYPE_SSIZE_T
